@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smart Irrigation | Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><div class="logo">🌱</div><div><h1>Smart Irrigation</h1><p>Prediction & water management system</p></div></div>
+  <div class="live"><span class="dot"></span> Backend connected</div>
+</header>
+<main>
+  <section class="intro">
+    <div><p class="eyebrow">FARM MONITORING DASHBOARD</p><h2>Make every drop count.</h2><p class="muted">Enter sensor readings to predict irrigation needs and review recent decisions.</p></div>
+    <div class="demo-note">Prototype mode · Sample/manual sensor readings</div>
+  </section>
+
+  <section class="metrics">
+    <article class="metric"><div class="metric-label">Soil moisture <span>💧</span></div><div class="metric-value" id="mMoisture">24%</div><div class="muted">Percentage</div></article>
+    <article class="metric"><div class="metric-label">Temperature <span>🌡️</span></div><div class="metric-value" id="mTemp">31°C</div><div class="muted">Ambient temperature</div></article>
+    <article class="metric"><div class="metric-label">Humidity <span>☁️</span></div><div class="metric-value" id="mHumidity">48%</div><div class="muted">Relative humidity</div></article>
+    <article class="metric"><div class="metric-label">Water estimate <span>🚿</span></div><div class="metric-value" id="mWater">—</div><div class="muted">Illustrative litres</div></article>
+  </section>
+
+  <section class="grid">
+    <article class="panel">
+      <div class="panel-heading"><div><p class="eyebrow">INPUTS</p><h3>Sensor readings</h3></div><span class="chip">Manual input</span></div>
+      <form id="predictForm">
+        <div class="fields">
+          <label>Soil moisture (%)<input id="moisture" type="number" min="0" max="100" value="24" step="0.1" required></label>
+          <label>Temperature (°C)<input id="temperature" type="number" min="-10" max="70" value="31" step="0.1" required></label>
+          <label>Humidity (%)<input id="humidity" type="number" min="0" max="100" value="48" step="0.1" required></label>
+        </div>
+        <label class="check"><input id="rain" type="checkbox"> Rain expected soon</label>
+        <button class="btn primary" type="submit">Predict irrigation need <span>→</span></button>
+        <p class="message" id="formMessage" role="status">Ready to predict.</p>
+      </form>
+    </article>
+    <article class="panel result-panel">
+      <div class="panel-heading"><div><p class="eyebrow">BACKEND PREDICTION</p><h3>Recommendation</h3></div><span class="chip green">API powered</span></div>
+      <div id="resultIcon" class="result-icon">🌿</div>
+      <h2 id="resultTitle">Run a prediction</h2>
+      <p id="resultReason" class="muted">Your recommendation will appear here after you submit sensor values.</p>
+      <div class="result-bottom"><div><small>Estimated water</small><strong id="resultWater">—</strong></div><div><small>Decision score</small><strong id="resultScore">—</strong></div></div>
+    </article>
+  </section>
+
+  <section class="grid lower">
+    <article class="panel">
+      <div class="panel-heading"><div><p class="eyebrow">CONTROL</p><h3>Irrigation pump</h3></div><span class="chip" id="pumpChip">OFF</span></div>
+      <div class="pump-row"><div class="pump-symbol">⚙️</div><div><strong>Demo pump switch</strong><p class="muted">Software simulation only; no real pump is connected.</p></div><label class="switch"><input id="pumpSwitch" type="checkbox" aria-label="Toggle simulated pump"><span></span></label></div>
+      <p id="pumpMessage" class="message">Pump control is simulated for demonstration.</p>
+    </article>
+    <article class="panel">
+      <div class="panel-heading"><div><p class="eyebrow">RECENT ACTIVITY</p><h3>Prediction history</h3></div><button class="btn small" id="refreshHistory" type="button">Refresh</button></div>
+      <div class="table-wrap"><table><thead><tr><th>Time</th><th>Moisture</th><th>Decision</th></tr></thead><tbody id="historyBody"><tr><td colspan="3" class="muted">Loading history…</td></tr></tbody></table></div>
+    </article>
+  </section>
+  <p class="disclaimer">Academic prototype. Predictions use demonstration rules, not a trained or field-validated machine-learning model. Calibrate with crop- and soil-specific data before practical use.</p>
+</main>
+<footer>Smart Irrigation Prediction System · IoT + predictive decision support</footer>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
